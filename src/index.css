@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-olive-dark: #2D3025;
+  --color-brand-olive-medium: #404535;
+  --color-brand-olive-light: #F0EDE9;
+  --color-brand-beige-light: #F5F2ED;
+  --color-brand-beige-medium: #E6E2D8;
+  --color-brand-gold: #C5A059;
+  --color-brand-gold-dark: #B08B47;
+  --color-brand-charcoal: #2D3025;
+  --color-brand-stone-light: #F5F2ED;
+  --color-brand-stone-medium: #E6E2D8;
+  
+  --font-serif: "Georgia", serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* Custom scrollbar support to keep category tabs clean but accessible */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Glassmorphism utility for sticky headers and modal backgrounds */
+.glassmorphism {
+  background: rgba(245, 242, 237, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(45, 48, 37, 0.06);
+}
+
+.glassmorphism-dark {
+  background: rgba(45, 48, 37, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Custom smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}

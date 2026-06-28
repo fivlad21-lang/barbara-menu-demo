@@ -1,0 +1,6 @@
+{
+  "name": "Barbara QR Menu",
+  "description": "An elegant, ultra-fast QR Menu platform with localizations, dynamic search, interactive reservations, and a premium editorial visual identity.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
