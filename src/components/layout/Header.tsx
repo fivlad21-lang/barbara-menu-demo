@@ -38,13 +38,15 @@ export const Header: React.FC = () => {
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
           ? "py-3 glassmorphism shadow-sm"
-          : "py-5 bg-brand-stone-light border-b border-brand-olive-dark/5"
+          : "py-5 bg-transparent border-b border-transparent"
       }`}
     >
       <div className="max-w-md mx-auto px-5 flex items-center justify-between">
         {/* Logo / Title */}
         <div className="flex flex-col items-start select-none">
-          <h1 className="font-serif italic text-3xl tracking-tighter text-brand-olive-dark">
+          <h1 className={`font-serif italic text-3xl tracking-tighter transition-colors duration-300 ${
+            isScrolled ? "text-brand-olive-dark" : "text-brand-beige-light"
+          }`}>
             Barbara
           </h1>
           <p className="font-sans text-[8px] tracking-widest text-brand-gold uppercase font-bold mt-0.5">
@@ -74,7 +76,9 @@ export const Header: React.FC = () => {
                 className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full text-[9px] font-bold flex items-center justify-center border transition-all duration-200 select-none ${
                   language === lang.code
                     ? "bg-brand-olive-dark border-brand-olive-dark text-brand-stone-light shadow-sm"
-                    : "bg-white border-brand-stone-medium text-brand-olive-medium hover:border-brand-olive-medium/30"
+                    : isScrolled
+                      ? "bg-white border-brand-stone-medium text-brand-olive-medium hover:border-brand-olive-medium/30"
+                      : "bg-white/10 border-white/20 text-brand-beige-light hover:bg-white/20"
                 }`}
               >
                 {lang.flag}

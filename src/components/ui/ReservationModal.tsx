@@ -23,6 +23,7 @@ export const ReservationModal: React.FC = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [submittedData, setSubmittedData] = useState<any>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Disable body scroll when open
   useEffect(() => {
@@ -47,7 +48,7 @@ export const ReservationModal: React.FC = () => {
     }
   }, [isReservationOpen]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -65,19 +66,28 @@ export const ReservationModal: React.FC = () => {
       return;
     }
 
-    // Submit via service
-    const reservation = reservationService.createReservation({
-      name,
-      phone,
-      date,
-      time,
-      guests,
-      comment,
-    });
+    setIsSubmitting(true);
 
-    setSubmittedData(reservation);
-    setSuccess(true);
-    showToast(translations.notificationReserveSuccess, "success");
+    try {
+      // Submit via service
+      const reservation = await reservationService.createReservation({
+        name,
+        phone,
+        date,
+        time,
+        guests,
+        comment,
+      });
+
+      setSubmittedData(reservation);
+      setSuccess(true);
+      showToast(translations.notificationReserveSuccess, "success");
+    } catch (err: any) {
+      setError(err.message || "Failed to submit reservation. Please try again.");
+      showToast(err.message || "Failed to submit reservation.", "error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!isReservationOpen) return null;
@@ -268,10 +278,15 @@ export const ReservationModal: React.FC = () => {
                   <button
                     id="submit-reservation-btn"
                     type="submit"
-                    className="w-full py-4 px-4 bg-brand-olive-dark hover:bg-brand-olive-medium text-brand-stone-light text-xs font-bold rounded-xl shadow-lg hover:shadow-xl transition-all select-none mt-4 flex items-center justify-center gap-1.5 uppercase tracking-wider"
+                    disabled={isSubmitting}
+                    className="w-full py-4 px-4 bg-brand-olive-dark hover:bg-brand-olive-medium text-brand-stone-light text-xs font-bold rounded-xl shadow-lg hover:shadow-xl transition-all select-none mt-4 flex items-center justify-center gap-1.5 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <Sparkles className="w-4 h-4 text-brand-gold animate-pulse" />
-                    <span>{translations.reserveSubmit}</span>
+                    {isSubmitting ? (
+                      <div className="w-4 h-4 border-2 border-brand-gold border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <Sparkles className="w-4 h-4 text-brand-gold animate-pulse" />
+                    )}
+                    <span>{isSubmitting ? "Sending..." : translations.reserveSubmit}</span>
                   </button>
                 </motion.form>
               ) : (

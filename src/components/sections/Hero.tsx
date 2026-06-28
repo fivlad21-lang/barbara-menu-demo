@@ -5,99 +5,97 @@
 
 import React from "react";
 import { useApp } from "../../context/AppContext";
-import { brandTheme } from "../../theme";
-import { Clock, Compass, Instagram, Phone } from "lucide-react";
-import { BrandArtwork } from "../ui/BrandArtwork";
+import backgroundImage from "../../assets/images/background.webp";
 
 export const Hero: React.FC = () => {
   const { translations } = useApp();
 
   return (
-    <section id="hero-welcome-section" className="pt-24 pb-4 px-5 max-w-md mx-auto">
-      <div className="bg-white rounded-[2rem] border border-brand-olive-dark/5 shadow-sm p-0 overflow-hidden flex flex-col items-center text-center relative">
-        {/* Main Cover Image */}
-        <div className="relative w-full aspect-[16/10] bg-brand-stone-medium/40 overflow-hidden">
-          <BrandArtwork className="w-full h-full" />
-          {/* Subtle decorative top brand line */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-olive-dark via-brand-gold to-brand-olive-medium" />
-        </div>
+    <section id="hero-welcome-section" className="pt-24 pb-14 relative overflow-hidden w-full max-w-md mx-auto flex flex-col items-center justify-center text-center">
+      {/* Background container with absolute positioning */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Blurred background image */}
+        <div
+          className="absolute inset-0 transition-all duration-1000"
+          style={{
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            filter: "blur(20px)",
+            transform: "scale(1.08)",
+            opacity: 0.45,
+          }}
+        />
+        {/* Dark olive brand overlay */}
+        <div 
+          className="absolute inset-0 bg-brand-olive-dark" 
+          style={{ opacity: 0.58 }}
+        />
+        {/* Subtle top brand gold accent line */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-olive-dark via-brand-gold to-brand-olive-medium" />
+        {/* Bottom smooth fade-out gradient to blend with stone-light background */}
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-brand-stone-light to-transparent" />
+      </div>
+
+      {/* Hero Content Stacking */}
+      <div className="relative z-10 w-full px-6 flex flex-col items-center justify-between min-h-[380px] py-8">
         
-        <div className="p-6 pt-5 w-full flex flex-col items-center">
-          {/* Brand visual header */}
-          <div className="mt-1 mb-3">
-            <div className="w-10 h-10 rounded-full bg-brand-olive-light flex items-center justify-center mb-1">
-              <Compass className="w-4.5 h-4.5 text-brand-olive-dark animate-spin-slow" />
-            </div>
+        {/* Centered vertical stack with generous spacing */}
+        <div className="my-auto flex flex-col items-center space-y-9 w-full">
+          
+          {/* Elegant SVG Wordmark Logo */}
+          <div className="transition-transform duration-500 hover:scale-[1.03] active:scale-98 cursor-default">
+            <svg
+              version="1.0"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1000 1000"
+              preserveAspectRatio="xMidYMid meet"
+              className="w-48 h-48 text-brand-beige-light"
+              style={{ fill: "currentColor" }}
+            >
+              <g
+                transform="translate(0.000000,1000.000000) scale(0.100000,-0.100000)"
+                stroke="none"
+              >
+                <path d="M0 5000 l0 -5000 5000 0 5000 0 0 5000 0 5000 -5000 0 -5000 0 0 -5000z m7030 2710 c208 -19 289 -42 375 -108 74 -56 108 -128 113 -240 5 -101 -6 -149 -47 -214 -56 -89 -175 -153 -368 -198 -63 -15 -93 -26 -93 -36 0 -7 22 -76 49 -151 27 -76 65 -183 84 -238 56 -158 435 -1228 442 -1248 7 -16 0 -18 -95 -15 l-103 3 -13 35 c-6 19 -85 233 -174 475 -89 242 -211 583 -270 759 -59 175 -117 330 -127 345 -29 38 -84 54 -174 48 -91 -6 -120 -22 -145 -80 -17 -39 -18 -94 -17 -814 l1 -773 -204 0 -204 0 0 1230 0 1230 428 0 c235 0 479 -5 542 -10z m-5120 -135 l0 -135 45 0 45 0 0 110 0 110 55 0 55 0 0 -110 0 -110 50 0 50 0 0 135 0 135 55 0 55 0 0 -195 0 -195 -260 0 -260 0 0 195 0 195 55 0 55 0 0 -135z m1862 107 c87 -24 167 -71 215 -125 120 -137 123 -348 7 -503 -13 -18 -55 -53 -94 -78 -65 -43 -81 -66 -45 -66 26 0 181 -86 242 -133 229 -180 342 -511 288 -842 -54 -335 -244 -559 -545 -645 -62 -18 -119 -23 -320 -30 -293 -11 -634 -12 -747 -3 l-83 6 0 1224 0 1225 503 -4 c475 -4 506 -6 579 -26z m1659 -517 c75 -297 176 -695 224 -885 48 -190 125 -493 171 -674 46 -180 84 -332 84 -337 0 -6 -76 -8 -177 -7 l-177 3 -102 410 c-56 226 -107 426 -113 446 l-11 36 -207 7 c-115 3 -229 4 -254 0 l-47 -6 -108 -440 c-60 -241 -111 -443 -115 -449 -3 -6 -40 -9 -85 -7 l-80 3 58 235 c32 129 139 561 237 960 99 399 208 838 241 975 34 138 63 256 65 263 4 10 35 12 132 10 l127 -3 137 -540z m-3521 -201 l0 -135 48 3 47 3 3 108 3 107 54 0 55 0 0 -110 0 -110 100 0 100 0 0 -60 0 -59 -260 -3 -260 -3 0 198 0 197 55 0 55 0 0 -136z m410 -527 l0 -64 -40 -18 -40 -18 0 -109 0 -108 40 -16 40 -16 0 -64 c0 -57 -2 -63 -18 -56 -10 4 -127 52 -260 107 l-242 100 0 55 0 55 258 107 c141 58 258 107 260 107 1 1 2 -28 2 -62z m-363 -712 c20 -54 20 -54 1 -72 -33 -29 -48 -69 -48 -123 0 -45 4 -55 38 -92 35 -37 45 -42 94 -46 101 -8 170 49 170 142 0 47 -12 78 -45 114 -21 22 -21 23 -2 77 10 30 24 55 30 55 20 0 89 -73 110 -115 27 -58 32 -173 10 -232 -51 -134 -203 -204 -347 -161 -50 15 -122 78 -151 132 -31 59 -32 203 0 261 24 45 90 115 108 115 7 0 21 -25 32 -55z m4076 -986 c283 -17 381 -45 476 -134 67 -62 91 -126 91 -239 0 -117 -19 -167 -94 -241 -50 -50 -76 -67 -144 -93 -46 -18 -124 -42 -174 -54 -49 -12 -92 -26 -94 -32 -4 -10 213 -637 345 -1001 16 -44 73 -204 126 -355 54 -151 100 -280 102 -287 4 -11 -15 -13 -97 -11 l-103 3 -177 483 c-98 266 -224 619 -280 785 -113 335 -120 350 -156 374 -35 23 -187 22 -232 -1 -70 -36 -67 6 -70 -863 l-3 -783 -204 0 -205 0 0 1225 0 1225 193 3 c105 1 268 3 360 5 92 1 245 -3 340 -9z m-3503 -8 c254 -7 304 -11 357 -29 84 -27 141 -61 192 -117 69 -75 85 -122 86 -250 0 -99 -3 -116 -27 -167 -39 -84 -72 -123 -144 -168 -61 -38 -79 -60 -51 -60 7 0 46 -16 87 -36 310 -148 472 -440 457 -824 -6 -163 -28 -255 -94 -390 -39 -80 -59 -108 -137 -186 -75 -75 -107 -99 -176 -132 -170 -83 -186 -84 -772 -89 l-518 -5 0 1231 0 1231 223 -1 c122 0 355 -4 517 -8z m1891 -181 c26 -102 100 -392 164 -645 230 -908 287 -1133 346 -1362 32 -127 59 -236 59 -242 0 -8 -53 -11 -177 -9 l-177 3 -111 445 -111 445 -255 0 -254 0 -111 -445 -110 -445 -82 -3 c-64 -2 -82 0 -82 11 0 7 65 277 145 598 80 321 164 658 186 749 22 91 90 363 150 605 60 242 111 450 114 463 5 22 8 23 132 20 l126 -3 48 -185z m3178 153 c5 -21 52 -207 105 -413 52 -206 138 -544 190 -750 227 -893 315 -1244 313 -1247 -2 -1 -81 -3 -177 -3 l-174 -2 -107 424 c-58 232 -109 435 -113 451 l-6 27 -254 0 -254 0 -112 -450 -112 -450 -85 0 c-76 0 -84 2 -79 18 7 21 397 1594 512 2062 46 190 86 351 89 358 3 9 38 12 129 12 l125 0 10 -37z"/>
+                <path d="M6638 7550 c-69 -9 -119 -43 -148 -101 -59 -114 -19 -254 85 -300 101 -45 499 -33 638 19 214 79 226 276 22 347 -110 38 -428 57 -597 35z"/>
+                <path d="M3242 7546 c-112 -37 -127 -67 -127 -251 0 -123 2 -144 21 -175 45 -77 120 -104 289 -104 198 1 340 43 404 121 82 100 80 255 -6 345 -54 57 -117 70 -338 74 -152 3 -210 1 -243 -10z"/>
+                <path d="M3253 6831 c-58 -10 -87 -27 -114 -68 -18 -26 -19 -61 -19 -633 0 -680 -3 -653 74 -693 77 -40 403 -38 554 3 126 35 199 75 278 154 121 120 171 248 181 461 9 183 -26 323 -115 464 -68 108 -209 217 -340 262 -121 42 -384 68 -499 50z"/>
+                <path d="M5067 7180 c-30 -75 -212 -838 -203 -848 13 -12 395 -7 408 6 9 9 -14 115 -94 434 -58 233 -108 416 -111 408z"/>
+                <path d="M2043 6262 c-35 -14 -63 -28 -63 -32 0 -8 129 -60 148 -60 8 0 12 19 12 60 0 71 -2 71 -97 32z"/>
+                <path d="M5748 4580 c-111 -11 -166 -53 -194 -148 -32 -108 17 -225 111 -263 77 -31 503 -19 613 17 109 36 182 112 182 190 -1 86 -75 156 -194 183 -112 25 -366 35 -518 21z"/>
+                <path d="M2378 4580 c-62 -11 -117 -38 -141 -71 -44 -60 -43 -319 1 -379 49 -66 126 -90 280 -90 175 1 334 45 395 108 41 42 69 117 70 182 1 96 -42 174 -116 212 -77 39 -355 60 -489 38z"/>
+                <path d="M2293 3841 c-30 -14 -48 -31 -63 -60 -20 -40 -20 -50 -18 -640 3 -588 3 -600 24 -627 42 -58 64 -66 199 -77 305 -26 541 38 687 183 122 122 178 279 179 494 0 242 -65 405 -219 547 -152 141 -340 199 -637 199 -86 0 -119 -5 -152 -19z"/>
+                <path d="M4146 4199 c-32 -91 -207 -821 -201 -836 3 -10 46 -13 172 -13 203 0 243 5 243 31 0 21 -199 821 -205 828 -3 2 -7 -2 -9 -10z"/>
+                <path d="M7323 4053 c-77 -292 -165 -674 -159 -689 5 -14 32 -15 205 -12 110 1 203 6 206 10 8 8 -195 848 -205 848 -3 0 -25 -71 -47 -157z"/>
+              </g>
+            </svg>
           </div>
 
-          {/* Wordmark */}
-          <h2 className="font-serif italic text-4xl tracking-tighter text-brand-olive-dark">
-            Barbara
-          </h2>
-        <p className="font-sans text-[10px] tracking-widest text-brand-gold uppercase font-bold mt-1.5">
-          {brandTheme.tagline}
-        </p>
-
-        {/* Slogan */}
-        <p className="font-serif italic text-sm text-brand-charcoal/70 mt-3 max-w-xs leading-relaxed">
-          "{translations.heroSlogan}"
-        </p>
-
-        {/* Prominent Opening Hours Display */}
-        <div className="mt-4 py-2 px-5 rounded-full bg-brand-stone-medium/60 border border-brand-gold/30 flex items-center gap-2.5 text-brand-olive-dark select-none shadow-xs">
-          <Clock className="w-4 h-4 text-brand-gold shrink-0" />
-          <span className="text-xs font-mono font-bold tracking-wide">08:00 – 22:00</span>
-          <span className="text-[10px] font-sans text-brand-olive-medium font-bold uppercase tracking-wider border-l border-brand-olive-dark/15 pl-2.5">
-            {translations.everyDay}
-          </span>
-        </div>
-
-        {/* Info badges */}
-        <div className="w-full grid grid-cols-2 gap-2 mt-6 pt-5 border-t border-brand-stone-medium">
-          {/* Sarafovo location */}
-          <div className="flex flex-col items-center justify-center p-2 rounded-2xl bg-brand-stone-light border border-brand-olive-dark/[0.03]">
-            <span className="text-[9px] uppercase tracking-wider text-brand-olive-medium font-semibold">
-              Location
-            </span>
-            <span className="text-xs text-brand-olive-dark font-bold mt-0.5">
-              {brandTheme.location}
+          {/* Tagline Display */}
+          <div className="text-center">
+            <span className="font-sans text-xs sm:text-sm tracking-[0.28em] text-brand-gold uppercase font-bold block">
+              Coffee • Brunch • Cocktails
             </span>
           </div>
 
-          {/* Quick status (Open now based on hours) */}
-          <div className="flex flex-col items-center justify-center p-2 rounded-2xl bg-brand-stone-light border border-brand-olive-dark/[0.03]">
-            <span className="text-[9px] uppercase tracking-wider text-brand-olive-medium font-semibold flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-              Status
-            </span>
-            <span className="text-xs text-brand-olive-dark font-bold mt-0.5">
-              Open Daily
+          {/* Location Display */}
+          <div className="text-center">
+            <span className="font-serif italic text-lg sm:text-xl text-brand-beige-light/90 tracking-wide block select-none">
+              Sarafovo
             </span>
           </div>
+
+          {/* Opening Hours Display */}
+          <div className="text-center">
+            <span className="font-mono text-sm sm:text-base font-semibold text-brand-beige-light/75 tracking-widest block select-none">
+              08:00 – 22:00
+            </span>
+          </div>
+
         </div>
 
-        {/* Quick actions for instagram / telephone */}
-        <div className="flex gap-4 mt-4 w-full justify-center">
-          <a
-            id="hero-instagram-link"
-            href={brandTheme.instagramUrl}
-            target="_blank"
-            referrerPolicy="no-referrer"
-            className="flex items-center gap-1.5 text-xs font-semibold text-brand-olive-dark hover:text-brand-gold transition-colors py-1.5 px-3 rounded-full bg-brand-stone-medium/40"
-          >
-            <Instagram className="w-3.5 h-3.5" />
-            <span>Instagram</span>
-          </a>
-          <a
-            id="hero-call-link"
-            href={`tel:${brandTheme.phone.replace(/\s+/g, "")}`}
-            className="flex items-center gap-1.5 text-xs font-semibold text-brand-olive-dark hover:text-brand-gold transition-colors py-1.5 px-3 rounded-full bg-brand-stone-medium/40"
-          >
-            <Phone className="w-3.5 h-3.5" />
-            <span>{brandTheme.phone}</span>
-          </a>
-        </div>
-        </div>
       </div>
     </section>
   );

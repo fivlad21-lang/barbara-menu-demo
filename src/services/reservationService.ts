@@ -22,9 +22,22 @@ class ReservationService {
   }
 
   /**
-   * Adds a new reservation and saves it locally.
+   * Adds a new reservation, saves it locally, and posts to the Telegram backend.
    */
-  public createReservation(data: Omit<Reservation, "id" | "createdAt" | "status">): Reservation {
+  public async createReservation(data: Omit<Reservation, "id" | "createdAt" | "status">): Promise<Reservation> {
+    const response = await fetch("/api/reservation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error || "Failed to submit reservation notification.");
+    }
+
     const reservations = this.getReservations();
     
     const newReservation: Reservation = {
@@ -42,22 +55,37 @@ class ReservationService {
       console.error("Failed to save reservation to localStorage", e);
     }
 
-    // In a real application, we would make an API call to a webhook / Supabase here
     console.log("Reservation Submitted successfully:", newReservation);
     return newReservation;
   }
 
   /**
-   * Mock submitting a "Call Waiter" alert.
+   * Submits a "Call Waiter" alert.
    */
-  public callWaiter(tableNumber: string): void {
+  public async callWaiter(tableNumber: string): Promise<void> {
     const alertData = {
       id: "call_" + Math.random().toString(36).substr(2, 9),
       tableNumber,
       timestamp: new Date().toISOString(),
     };
     
-    // In a real application, this sends a WebSocket / PubSub notification to staff dashboard
+    try {
+      const response = await fetch("/api/call-waiter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tableNumber }),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        console.warn("[callWaiter] Server returned failure:", errData.error || response.statusText);
+      }
+    } catch (e) {
+      console.error("[callWaiter] Failed to notify backend of waiter call", e);
+    }
+
     console.log(`[WAITER CALL] Table ${tableNumber} has requested service!`, alertData);
   }
 }
